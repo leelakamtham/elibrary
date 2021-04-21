@@ -6,11 +6,7 @@ const mongoose = require('mongoose');
    
    
    {
-        _id:{
-         type:Number,
-         required: true,
-         unique:true
-         },
+        
          username:{
          type: String,
          required: true

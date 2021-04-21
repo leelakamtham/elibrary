@@ -17,7 +17,15 @@ exports.findAll = function(req,res){
 
 
 exports.create = function(req,res){
-    
+    const { role } = req.user;
+
+    if (role !== 'admin') {
+        return res.sendStatus(403);
+    }
+
+
+
+
    const book = new Books({
     
     author: req.body.author,
