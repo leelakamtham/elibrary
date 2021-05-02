@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//const Joi = require('joi');
+const Joi = require('@hapi/joi');
 
    const Users = mongoose.model('users',
    mongoose.Schema( 
@@ -12,19 +12,16 @@ const mongoose = require('mongoose');
          required: true
           },
      
-      email:{
+        email:{
          type: String,
          required: true
-      },
+         },
 
-     password:{
+       password:{
         type:String,
         required:true
       },
-      role: {
-        type: String,
-        required: true
-      },
+      isAdmin: Boolean
      
    
       }   )
@@ -39,14 +36,22 @@ const mongoose = require('mongoose');
       
    );
 
-
-
-
+   function validateUser(user) {
+      const schema = {
+        name: Joi.string().min(5).required(),
+        email: Joi.string().min(5).max(255).required().email(),
+        password: Joi.string().min(5).max(255).required(),
+      };
+    
+      return Joi.validate(user, schema);
+    }
+  
 
 
    
 
    module.exports = Users;
+   module.exports = validateUser;
   
 
    

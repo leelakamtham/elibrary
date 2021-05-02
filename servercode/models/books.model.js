@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//const Joi = require('joi');
+const Joi = require('@hapi/joi');
 
    const Books = mongoose.model('books',
    mongoose.Schema( 
@@ -19,12 +19,13 @@ const mongoose = require('mongoose');
 
      title:{
         type:String,
-        required:true
+        required:true,
+        unique:true
       },
       pages:{
         type:Number,
-        required: true,
-        unique:true
+        required: true
+        
         },
         country: {
         type: String,
@@ -47,11 +48,23 @@ const mongoose = require('mongoose');
 
 
 
+   function validateBooks(books) {
+      const schema = {
+        author: Joi.string().min(3).max(255).required(),
+        title: Joi.string().min(3).max(255).required().unique(),
+        language: Joi.string().min(3).required(),
+        pages: Joi.Number().required(),
+
+      };
+    
+      return Joi.validate(book, schema);
+    }
 
 
    
 
    module.exports = Books;
+   exports.validate = validateBooks;
   
 
    
